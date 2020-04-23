@@ -9,7 +9,7 @@ export class TaskStatusValidationPipe implements PipeTransform {
     ]
 
     transform(value: any) {
-        // tmo fix 500 err
+        // tmp fix 500 err
         if (value === undefined) {
             throw new BadRequestException(`"${value}" is an invalid status`);
         }
