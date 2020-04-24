@@ -61,7 +61,6 @@ export class TasksService {
   }
 
   updateTaskStatus(id: string, status: TaskStatus): Task {
-    // validation empty status
     const task = this.getTaskById(id);
     task.status = status;
     return task;
