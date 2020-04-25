@@ -3,7 +3,7 @@ import { TasksService } from './tasks.service';
 import { Task, TaskStatus } from './task.model';
 import { CreateTaskDto } from './dto/cretae-task.dto';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
-import { TaskStatusValidationPipe } from 'src/pipes/task-status-validation.pipe';
+import { TaskStatusValidationPipe } from 'src/tasks/pipes/task-status-validation.pipe';
 
 @Controller('tasks')
 export class TasksController {
