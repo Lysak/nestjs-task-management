@@ -2,9 +2,7 @@ import { PipeTransform, BadRequestException } from "@nestjs/common";
 import { TaskStatus } from "src/tasks/task-status.enum";
 
 export class TaskStatusValidationPipe implements PipeTransform {
-  readonly allowedStatuses = [
-    Object.values(TaskStatus)
-  ]
+  readonly allowedStatuses = Object.values(TaskStatus)
 
   transform(value: any) {
     // tmp fix 500 err
