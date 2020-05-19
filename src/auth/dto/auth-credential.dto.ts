@@ -10,6 +10,7 @@ export class AuthCredentialDto {
   @MinLength(8)
   @MaxLength(20)
   @Matches(
+    // /((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/ - regex in cource
     /(?:(?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/,
     { message: 'password too weak' },
   )
