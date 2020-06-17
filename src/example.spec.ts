@@ -49,14 +49,14 @@ describe('FriendshipList', () => {
 
   describe('removeFriends', () => {
     it('removes a friend from this list', () => {
-        friendsList.addFriend('Lysak');
-        expect(friendsList.friends[0]).toEqual('Lysak');
-        friendsList.removeFriend('Lysak');
-        expect(friendsList.friends[0]).toBeUndefined();
-      });
+      friendsList.addFriend('Lysak');
+      expect(friendsList.friends[0]).toEqual('Lysak');
+      friendsList.removeFriend('Lysak');
+      expect(friendsList.friends[0]).toBeUndefined();
+    });
 
-      it('throw an error as friend boes not exists', () => {
-        expect(() => friendsList.removeFriend('Lysak')).toThrow(new Error('Friends not found!'));
-      });
+    it('throw an error as friend boes not exists', () => {
+      expect(() => friendsList.removeFriend('Lysak')).toThrow(new Error('Friends not found!'));
+    });
   })
 });
