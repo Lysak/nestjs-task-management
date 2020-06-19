@@ -4,10 +4,11 @@ import {TaskRepository} from "./tasks.repository";
 import {GetTasksFilterDto} from "./dto/get-tasks-filter.dto";
 import {TaskStatus} from "./task-status.enum";
 
-const mockUser = { username: 'Test user' };
+const mockUser = {username: 'Test user'};
 
 const mockTaskRepository = () => ({
   getTasks: jest.fn(),
+  finOne: jest.fn(),
 });
 
 describe('TaskService', () => {
@@ -18,7 +19,7 @@ describe('TaskService', () => {
     const module = await Test.createTestingModule({
       providers: [
         TasksService,
-        { provide: TaskRepository, useFactory: mockTaskRepository },
+        {provide: TaskRepository, useFactory: mockTaskRepository},
       ],
     }).compile();
 
@@ -31,12 +32,24 @@ describe('TaskService', () => {
       taskRepository.getTasks.mockResolvedValue('someValue');
 
       expect(taskRepository.getTasks).not.toHaveBeenCalled();
-      const filters: GetTasksFilterDto = { status: TaskStatus.IN_PROGRESS, search: 'Some search query'};
+      const filters: GetTasksFilterDto = {status: TaskStatus.IN_PROGRESS, search: 'Some search query'};
       // call tasksService.getTasks
       const result = await taskService.getTasks(filters, mockUser);
       // expect taskRepository.getTasks TO HAVE BEEN CALLED
       expect(taskRepository.getTasks).toHaveBeenCalled();
       expect(result).toEqual('someValue')
+    });
+  });
+
+  describe('getTaskById', () => {
+    it('calls taskRepository.findOne() and successfully retrieve and return the task', async () => {
+      taskRepository.findOne.mockResolvedValue({title: 'Test task', description: 'Test desc'});
+
+      const result = await taskService.getTaskById(1, mockUser);
+    });
+
+    it('throws an error as task is not found', () => {
+      //
     });
   });
 });
