@@ -61,9 +61,55 @@ describe('TasksService', () => {
       });
     });
 
-    it('throws an error as task is not found', async () => {
+    it('throws an error as task is not found', () => {
       taskRepository.findOne.mockResolvedValue(null);
       expect(tasksService.getTaskById(1, mockUser)).rejects.toThrow(NotFoundException);
     });
   });
+
+  describe('createTask', () => {
+    it('calls taskRepository.create() and returns the result', async () => {
+      taskRepository.createTask.mockResolvedValue('some task');
+
+      expect(taskRepository.createTask).not.toHaveBeenCalled();
+      const createTaskDto = {title: 'Test task', description: 'Test desc'};
+      const result = await tasksService.createTask(createTaskDto, mockUser);
+      expect(taskRepository.createTask).toHaveBeenCalledWith(createTaskDto, mockUser);
+      expect(result).toEqual('some task');
+    });
+  });
+
+  // describe('deleteTask', () => {
+  //     it('calls taskRepository.deleteTask() to delete a task', async () => {
+  //         taskRepository.delete.mockResolvedValue({affected: 1});
+  //         expect(taskRepository.delete).not.toHaveBeenCalled();
+  //         await tasksService.deleteTask(1, mockUser);
+  //         expect(taskRepository.delete).toHaveBeenCalledWith({id: 1, userId: mockUser.id});
+  //     });
+  //
+  //     it('throws an error as task is not found', async () => {
+  //         taskRepository.delete.mockResolvedValue({affected: 0});
+  //         expect(tasksService.deleteTask(1, mockUser)).rejects.toThrow(NotFoundException);
+  //     });
+  // });
+  //
+  // describe('updateTaskStatus', () => {
+  //     it('updates task status', async () => {
+  //         const mockTask = {id: 1, title: 'Test task', description: 'Test desc', status: TaskStatus.OPEN};
+  //         const save = jest.fn().mockResolvedValue(true);
+  //         tasksService.getTaskById = jest.fn().mockResolvedValue({
+  //             id: 1,
+  //             title: 'Test task',
+  //             description: 'Test desc',
+  //             status: TaskStatus.OPEN,
+  //             save,
+  //         });
+  //         expect(tasksService.getTaskById).not.toHaveBeenCalled();
+  //         expect(save).not.toHaveBeenCalled();
+  //         const result = await tasksService.updateTaskStatus(mockTask.id, TaskStatus.DONE, mockUser);
+  //         expect(tasksService.getTaskById).toHaveBeenCalled();
+  //         expect(save).toHaveBeenCalled();
+  //         expect(result.status).toEqual(TaskStatus.DONE);
+  //     });
+  // });
 });
