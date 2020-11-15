@@ -34,6 +34,14 @@
 $ npm install
 ```
 
+
+## Running the app - Yarn
+
+```bash
+# watch mode
+$ yarn run start:dev
+```
+
 ## Running the app
 
 ```bash

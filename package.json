@@ -32,6 +32,7 @@
     "class-transformer": "^0.3.1",
     "class-validator": "^0.12.1",
     "config": "^3.3.1",
+    "mysql": "^2.18.1",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "pg": "^8.0.3",
@@ -39,10 +40,9 @@
     "rimraf": "^3.0.2",
     "rxjs": "^6.5.4",
     "tslib": "^1.11.1",
-    "typeorm": "^0.2.24"
+    "typeorm": "^0.2.29"
   },
   "devDependencies": {
-    "tslint": "^6.1.2",
     "@nestjs/cli": "^7.0.0",
     "@nestjs/schematics": "^7.0.0",
     "@nestjs/testing": "^7.2.0",
@@ -62,6 +62,7 @@
     "ts-loader": "^6.2.1",
     "ts-node": "^8.6.2",
     "tsconfig-paths": "^3.9.0",
+    "tslint": "^6.1.2",
     "typescript": "^3.7.4"
   },
   "jest": {
