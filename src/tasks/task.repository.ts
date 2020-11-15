@@ -1,11 +1,10 @@
-import { Task } from "./task.entity";
-import { EntityRepository, Repository } from "typeorm";
-import { CreateTaskDto } from "./dto/cretae-task.dto";
-import { TaskStatus } from "./task-status.enum";
-import { GetTasksFilterDto } from "./dto/get-tasks-filter.dto";
-import { User } from "src/auth/user.entity";
-import { InternalServerErrorException, Logger } from "@nestjs/common";
-import { stringify } from "querystring";
+import {Task} from "./task.entity";
+import {EntityRepository, Repository} from "typeorm";
+import {CreateTaskDto} from "./dto/cretae-task.dto";
+import {TaskStatus} from "./task-status.enum";
+import {GetTasksFilterDto} from "./dto/get-tasks-filter.dto";
+import {User} from "src/auth/user.entity";
+import {InternalServerErrorException, Logger} from "@nestjs/common";
 
 @EntityRepository(Task)
 export class TaskRepository extends Repository<Task> {
@@ -15,7 +14,7 @@ export class TaskRepository extends Repository<Task> {
     filterDto: GetTasksFilterDto,
     user: User,
   ): Promise<Task[]> {
-    const { status, search } = filterDto;
+    const {status, search} = filterDto;
     const query = this.createQueryBuilder('task');
 
     query.where('task.userId = :userId', { userId: user.id });

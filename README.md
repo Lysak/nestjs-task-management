@@ -40,6 +40,9 @@ $ npm install
 ```bash
 # watch mode
 $ yarn run start:dev
+
+# test watch mode
+$ yarn run test:watch
 ```
 
 ## Running the app

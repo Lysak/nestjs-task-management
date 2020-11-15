@@ -1,18 +1,22 @@
 import {Test} from '@nestjs/testing';
-import {TasksService} from "./tasks.service";
-import {TaskRepository} from "./tasks.repository";
-import {GetTasksFilterDto} from "./dto/get-tasks-filter.dto";
-import {TaskStatus} from "./task-status.enum";
+import {TasksService} from './tasks.service';
+import {TaskRepository} from './task.repository';
+import {GetTasksFilterDto} from './dto/get-tasks-filter.dto';
+import {TaskStatus} from './task-status.enum';
+import {NotFoundException} from '@nestjs/common';
 
-const mockUser = {username: 'Test user'};
+const mockUser = {id: 12, username: 'Test user'};
 
 const mockTaskRepository = () => ({
   getTasks: jest.fn(),
-  finOne: jest.fn(),
+  findOne: jest.fn(),
+  createTask: jest.fn(),
+  delete: jest.fn(),
+  save: jest.fn(),
 });
 
-describe('TaskService', () => {
-  let taskService;
+describe('TasksService', () => {
+  let tasksService;
   let taskRepository;
 
   beforeEach(async () => {
@@ -23,7 +27,7 @@ describe('TaskService', () => {
       ],
     }).compile();
 
-    taskService = await module.get<TasksService>(TasksService);
+    tasksService = await module.get<TasksService>(TasksService);
     taskRepository = await module.get<TaskRepository>(TaskRepository);
   });
 
@@ -34,22 +38,32 @@ describe('TaskService', () => {
       expect(taskRepository.getTasks).not.toHaveBeenCalled();
       const filters: GetTasksFilterDto = {status: TaskStatus.IN_PROGRESS, search: 'Some search query'};
       // call tasksService.getTasks
-      const result = await taskService.getTasks(filters, mockUser);
+      const result = await tasksService.getTasks(filters, mockUser);
       // expect taskRepository.getTasks TO HAVE BEEN CALLED
       expect(taskRepository.getTasks).toHaveBeenCalled();
-      expect(result).toEqual('someValue')
+      expect(result).toEqual('someValue');
     });
   });
 
   describe('getTaskById', () => {
     it('calls taskRepository.findOne() and successfully retrieve and return the task', async () => {
-      taskRepository.findOne.mockResolvedValue({title: 'Test task', description: 'Test desc'});
+      const mockTask = {title: 'Test task', description: 'Test desc'};
+      taskRepository.findOne.mockResolvedValue(mockTask);
 
-      const result = await taskService.getTaskById(1, mockUser);
+      const result = await tasksService.getTaskById(1, mockUser);
+      expect(result).toEqual(mockTask);
+
+      expect(taskRepository.findOne).toHaveBeenCalledWith({
+        where: {
+          id: 1,
+          userId: mockUser.id,
+        }
+      });
     });
 
-    it('throws an error as task is not found', () => {
-      //
+    it('throws an error as task is not found', async () => {
+      taskRepository.findOne.mockResolvedValue(null);
+      expect(tasksService.getTaskById(1, mockUser)).rejects.toThrow(NotFoundException);
     });
   });
 });
