@@ -39,6 +39,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.5.4",
+    "serialize-javascript": "^5.0.1",
     "tslib": "^1.11.1",
     "typeorm": "^0.2.29"
   },
