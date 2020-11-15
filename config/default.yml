@@ -2,9 +2,9 @@ server:
   port: 3000
 
 db:
-  type: 'postgres'
-  port: 5432
+  type: 'mysql'
+  port: 3306
   database: 'taskmanagment' # taskmanagement
 
 jwt:
-  expiriesIn: 3600
+  expiresIn: 3600
